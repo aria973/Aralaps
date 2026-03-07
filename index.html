@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>aralaps</title>
+<link rel="manifest" href="./manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-dark">
+  <div class="app">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <button id="settingsBtn" class="icon-btn glass-btn" type="button" aria-label="تنظیمات">
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M12 8.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8Zm9 3.4-.98-.57a8.76 8.76 0 0 0-.2-1.15l.82-.8a1 1 0 0 0 .22-1.1l-1.1-2.67a1 1 0 0 0-.94-.62l-1.13.05c-.3-.34-.63-.65-.98-.94l-.01-1.15a1 1 0 0 0-.62-.92L13.4 1.1a1 1 0 0 0-1.1.21l-.82.82c-.38-.08-.76-.14-1.15-.18L9.76.98a1 1 0 0 0-.98-.78H6.22a1 1 0 0 0-.98.78l-.57.98c-.39.04-.77.1-1.15.18l-.82-.82a1 1 0 0 0-1.1-.21L.92 4.02a1 1 0 0 0-.62.92v1.15c-.35.29-.68.6-.98.94l-1.13-.05a1 1 0 0 0-.94.62l-1.1 2.67a1 1 0 0 0 .22 1.1l.82.8c-.09.38-.15.76-.2 1.15l-.98.57a1 1 0 0 0-.5.87v2.44a1 1 0 0 0 .5.87l.98.57c.05.39.11.77.2 1.15l-.82.8a1 1 0 0 0-.22 1.1l1.1 2.67a1 1 0 0 0 .94.62l1.13-.05c.3.34.63.65.98.94v1.15a1 1 0 0 0 .62.92l2.67 1.1a1 1 0 0 0 1.1-.21l.82-.82c.38.08.76.14 1.15.18l.57.98a1 1 0 0 0 .98.78h2.56a1 1 0 0 0 .98-.78l.57-.98c.39-.04.77-.1 1.15-.18l.82.82a1 1 0 0 0 1.1.21l2.67-1.1a1 1 0 0 0 .62-.92v-1.15c.35-.29.68-.6.98-.94l1.13.05a1 1 0 0 0 .94-.62l1.1-2.67a1 1 0 0 0-.22-1.1l-.82-.8c.09-.38.15-.76.2-1.15l.98-.57a1 1 0 0 0 .5-.87v-2.44a1 1 0 0 0-.5-.87Z"/>
+          </svg>
+        </button>
+
+        <div class="brand">
+          <div class="brand-title">aralaps</div>
+          <div class="brand-sub">interval timer</div>
+        </div>
+
+        <button id="themeBtn" class="icon-btn glass-btn" type="button" aria-label="تم">
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7.1 7.1 0 0 0 9.8 9.8Z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="timer-screen">
+      <div class="ambient-glow"></div>
+
+      <div class="timer-header">
+        <div id="cycleCounter" class="capsule">چرخه 1 از 1</div>
+        <div id="partName" class="part-name">آماده</div>
+        <div id="partIndex" class="part-index">پارت 1 / 1</div>
+      </div>
+
+      <section class="ring-stage">
+        <svg class="progress-ring" viewBox="0 0 300 300" aria-hidden="true">
+          <defs>
+            <linearGradient id="ringGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop id="gradStop1" offset="0%" stop-color="#7C5CFF"></stop>
+              <stop id="gradStop2" offset="100%" stop-color="#25D0FF"></stop>
+            </linearGradient>
+            <filter id="ringGlow">
+              <feGaussianBlur stdDeviation="5" result="blur"></feGaussianBlur>
+              <feMerge>
+                <feMergeNode in="blur"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <circle class="ring-bg" cx="150" cy="150" r="124"></circle>
+          <circle id="ringProgress" class="ring-progress" cx="150" cy="150" r="124"></circle>
+        </svg>
+
+        <div class="time-core">
+          <div id="remainingTime" class="remaining-time">00:30.0</div>
+          <div id="elapsedTime" class="elapsed-time">گذشته: 00:00.0</div>
+        </div>
+      </section>
+
+      <div id="timeline" class="timeline"></div>
+
+      <div class="controls">
+        <button id="resetBtn" class="control-btn glass-btn" type="button" aria-label="ریست">
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M12 5a7 7 0 1 1-6.65 9.2H3l3.5-3.5L10 14H7.4A5 5 0 1 0 12 7V5Z"/>
+          </svg>
+        </button>
+
+        <button id="playPauseBtn" class="control-btn play-btn" type="button" aria-label="شروع یا توقف">
+          <svg id="playPauseIcon" viewBox="0 0 24 24" class="icon">
+            <path d="M8 5.5v13l10-6.5-10-6.5Z"/>
+          </svg>
+        </button>
+
+        <button id="nextBtn" class="control-btn glass-btn" type="button" aria-label="بعدی">
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M6 5.5v13l9-6.5-9-6.5Zm10 0h2v13h-2v-13Z"/>
+          </svg>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <div id="settingsModal" class="modal hidden" aria-hidden="true">
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+
+    <div class="modal-sheet glass-sheet">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-head">
+        <div>
+          <div class="sheet-title">تنظیمات aralaps</div>
+          <div class="sheet-sub">ادیت اینتروال‌ها، تکرار، صدا و ویبره</div>
+        </div>
+
+        <button id="closeSettingsBtn" class="icon-btn glass-btn" type="button" aria-label="بستن">
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M6.7 5.3 5.3 6.7 10.6 12l-5.3 5.3 1.4 1.4 5.3-5.3 5.3 5.3 1.4-1.4-5.3-5.3 5.3-5.3-1.4-1.4-5.3 5.3-5.3-5.3Z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sheet-content">
+        <section class="settings-block">
+          <div class="block-title">عمومی</div>
+
+          <div class="inline-grid">
+            <label class="field">
+              <span>تعداد تکرار کل سیکل</span>
+              <input id="repeatCountInput" class="text-input" type="number" min="1" max="999" inputmode="numeric" />
+            </label>
+          </div>
+
+          <div class="toggles">
+            <label class="toggle-row">
+              <span>ویبره</span>
+              <input id="vibrateToggle" type="checkbox" />
+            </label>
+
+            <label class="toggle-row">
+              <span>هشدار صوتی</span>
+              <input id="alertsToggle" type="checkbox" />
+            </label>
+          </div>
+        </section>
+
+        <section class="settings-block">
+          <div class="block-title">صداها</div>
+
+          <div class="sound-grid">
+            <label class="field">
+              <span>صدای شروع</span>
+              <input id="startSoundInput" class="file-input" type="file" accept="audio/*" />
+            </label>
+
+            <label class="field">
+              <span>صدای تعویض پارت</span>
+              <input id="switchSoundInput" class="file-input" type="file" accept="audio/*" />
+            </label>
+
+            <label class="field">
+              <span>صدای پایان کل</span>
+              <input id="finishSoundInput" class="file-input" type="file" accept="audio/*" />
+            </label>
+          </div>
+
+          <div class="small-note">
+            فایل صوتی داخل مرورگر به‌صورت local نگه‌داری می‌شود.
+          </div>
+        </section>
+
+        <section class="settings-block">
+          <div class="block-title">پارت‌ها</div>
+
+          <div id="partsEditor" class="parts-editor"></div>
+
+          <button id="addPartBtn" class="wide-btn glass-btn" type="button">
+            <svg viewBox="0 0 24 24" class="icon">
+              <path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/>
+            </svg>
+            <span>افزودن پارت</span>
+          </button>
+        </section>
+      </div>
+
+      <div class="sheet-actions">
+        <button id="cancelSettingsBtn" class="wide-btn glass-btn" type="button">لغو</button>
+        <button id="applySettingsBtn" class="wide-btn primary-btn" type="button">تأیید</button>
+      </div>
+    </div>
+  </div>
+
+  <template id="partEditorTemplate">
+    <div class="part-card glass-soft">
+      <div class="part-card-head">
+        <div class="mini-badge">پارت</div>
+        <button class="delete-part-btn icon-btn glass-btn" type="button" aria-label="حذف">
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M7 6h10l-1 14H8L7 6Zm3-3h4l1 2h4v2H5V5h4l1-2Z"/>
+          </svg>
+        </button>
+      </div>
+
+      <label class="field">
+        <span>نام</span>
+        <input class="text-input js-name" type="text" maxlength="24" />
+      </label>
+
+      <div class="picker-row">
+        <div class="picker-block">
+          <div class="picker-label">دقیقه</div>
+          <div class="wheel-wrap">
+            <select class="wheel-select js-minutes"></select>
+          </div>
+        </div>
+
+        <div class="picker-separator">:</div>
+
+        <div class="picker-block">
+          <div class="picker-label">ثانیه</div>
+          <div class="wheel-wrap">
+            <select class="wheel-select js-seconds"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span>رنگ</span>
+        <div class="swatches js-swatches"></div>
+      </div>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
