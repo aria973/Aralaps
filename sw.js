@@ -1,15 +1,16 @@
-const CACHE_NAME = "aralaps-cache-v1";
+const CACHE_NAME = "aralaps-cache-v13";
+const BASE_PATH = "/Aralaps";
 
 const APP_ASSETS = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./app.js",
-  "./manifest.json",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-192-maskable.png",
-  "./icons/icon-512-maskable.png"
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/index.html`,
+  `${BASE_PATH}/style.css`,
+  `${BASE_PATH}/app.js`,
+  `${BASE_PATH}/manifest.json`,
+  `${BASE_PATH}/icons/icon-192.png`,
+  `${BASE_PATH}/icons/icon-512.png`,
+  `${BASE_PATH}/icons/icon-192-maskable.png`,
+  `${BASE_PATH}/icons/icon-512-maskable.png`
 ];
 
 self.addEventListener("install", (event) => {
@@ -34,43 +35,47 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;
-
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
 
-  if (url.origin !== location.origin) {
-    return;
-  }
+  // فقط فایل‌های همین پروژه را هندل کن
+  if (!url.pathname.startsWith(BASE_PATH)) return;
 
+  // برای navigation همیشه fallback به index همین پروژه
   if (request.mode === "navigate") {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const cloned = response.clone();
+          const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put("./index.html", cloned);
+            cache.put(`${BASE_PATH}/index.html`, clone);
           });
           return response;
         })
-        .catch(() => caches.match("./index.html"))
+        .catch(() => caches.match(`${BASE_PATH}/index.html`))
     );
     return;
   }
 
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) return cachedResponse;
+    caches.match(request).then((cached) => {
+      if (cached) return cached;
 
-      return fetch(request).then((networkResponse) => {
-        const cloned = networkResponse.clone();
+      return fetch(request)
+        .then((response) => {
+          if (!response || response.status !== 200 || response.type !== "basic") {
+            return response;
+          }
 
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, cloned);
-        });
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, clone);
+          });
 
-        return networkResponse;
-      });
+          return response;
+        })
+        .catch(() => caches.match(`${BASE_PATH}/index.html`));
     })
   );
 });
