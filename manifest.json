@@ -2,8 +2,8 @@
   "name": "aralaps",
   "short_name": "aralaps",
   "description": "Offline interval timer for iPhone with custom parts, sounds, waveform trim, and history.",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/Aralaps/",
+  "scope": "/Aralaps/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0f172a",
@@ -12,25 +12,25 @@
   "dir": "rtl",
   "icons": [
     {
-      "src": "./icons/icon-192.png",
+      "src": "/Aralaps/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "/Aralaps/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./icons/icon-192-maskable.png",
+      "src": "/Aralaps/icons/icon-192-maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "./icons/icon-512-maskable.png",
+      "src": "/Aralaps/icons/icon-512-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
