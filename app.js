@@ -170,11 +170,20 @@ applyTheme(state.theme);
 renderRuntime();
 renderHistory();
 
+// if ("serviceWorker" in navigator) {
+//   window.addEventListener("load", () => {
+//     navigator.serviceWorker.register('/Aralaps/sw.js').catch(() => {});
+//   });
+// }
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register('/Aralaps/sw.js').catch(() => {});
+    navigator.serviceWorker.register("/Aralaps/sw.js", {
+      scope: "/Aralaps/"
+    }).catch(console.error);
   });
 }
+
 
 function makePart(name, minutes, seconds, colorId) {
   return {
