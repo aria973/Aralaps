@@ -343,6 +343,10 @@
     </div>
   </template>
 
-  <script src="./app.js"></script>
+  <script src="./app.js">
+    navigator.serviceWorker.register('/Aralaps/sw.js', {
+      scope: '/Aralaps/'
+    });
+  </script>
 </body>
 </html>
