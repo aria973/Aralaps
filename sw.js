@@ -123,16 +123,53 @@ self.addEventListener("activate", (event) => {
 });
 
 // -------------------- FETCH --------------------
+// self.addEventListener("fetch", (event) => {
+//   const request = event.request;
+
+//   // Only GET requests
+//   if (request.method !== "GET") return;
+
+//   const url = new URL(request.url);
+
+//   // Only handle our app scope
+//   if (!url.pathname.startsWith(BASE_PATH)) return;
+
 self.addEventListener("fetch", (event) => {
   const request = event.request;
 
-  // Only GET requests
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
 
-  // Only handle our app scope
   if (!url.pathname.startsWith(BASE_PATH)) return;
+
+  event.respondWith(
+    caches.match(request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(request).then((networkResponse) => {
+        if (
+          networkResponse &&
+          networkResponse.status === 200
+        ) {
+          const clone = networkResponse.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, clone);
+          });
+        }
+
+        return networkResponse;
+      });
+    })
+  );
+});
+
+
+
+
 
   // ---------------- NAVIGATION ----------------
   if (request.mode === "navigate") {
