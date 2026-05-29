@@ -80,7 +80,7 @@
 //   );
 // });
 
-const CACHE_NAME = "aralaps-cache-v14";
+const CACHE_NAME = "aralaps-cache-v15";
 const BASE_PATH = "/Aralaps";
 
 const APP_ASSETS = [
